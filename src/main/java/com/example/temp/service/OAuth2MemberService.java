@@ -26,25 +26,30 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        logger.info("user = " + oAuth2User.getAttributes());
         String provider = userRequest.getClientRegistration().getClientId();
+        logger.info("user = " + oAuth2User.getAttributes());
         String provider_id = oAuth2User.getAttribute("sub");
-        String uniqueKey = provider + "_" + provider_id;
-        logger.info("unique key : " + uniqueKey);
+        String uuid = provider + "_" + provider_id;
+        logger.info("unique key : " + uuid);
 
         String email = oAuth2User.getAttribute("email");
 
         String fullName = oAuth2User.getAttribute("family_name");
         fullName = fullName + oAuth2User.getAttribute("given_name");
         logger.info("user full name : " + fullName);
+        Optional<Member> someone = memberRepository.findByUuid(uuid);
+        if (someone.isEmpty()) {
             Member member = Member.builder()
                     .name(fullName)
+                    .uuid(uuid)
                     .email(email)
                     .provider(provider)
                     .providerId(provider_id)
                     .profileImage(oAuth2User.getAttribute("picture"))
                     .country(oAuth2User.getAttribute("locale")).build();
             memberRepository.save(member);
+        }
         return oAuth2User;
+
     }
 }
