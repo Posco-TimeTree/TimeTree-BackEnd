@@ -38,5 +38,9 @@ public class MessageDAO {
     public MessageEntity readMessagesByUserIdAndBoxId(Long userId, Long boxId) {
         return  this.messageRepository.findByUserIdAndBoxId(userId, boxId);
     }
+    public List<MessageEntity> getMessagesByUserId(Long userId) {
+        System.out.println(userId+"getMessagesByUserId");
+        return messageRepository.findByUserId(userId);
+    }
 }
 

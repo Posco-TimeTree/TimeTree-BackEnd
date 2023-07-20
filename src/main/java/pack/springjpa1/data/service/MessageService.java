@@ -28,4 +28,8 @@ public class MessageService {
     public MessageEntity readMessagesByUserIdAndBoxId(Long userId, Long boxId) {
         return messageDAO.readMessagesByUserIdAndBoxId(userId, boxId);
     }
+    public List<MessageEntity> getMessagesByUserId(Long userId) {
+
+        return messageDAO.getMessagesByUserId(userId);
+    }
 }
