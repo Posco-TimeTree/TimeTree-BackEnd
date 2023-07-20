@@ -3,13 +3,15 @@ package com.example.temp.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
-    private static final String SECRET_KEY="sercretKey";
+    private final byte[] secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded();
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final int SUBSTRING_BEARER_INDEX = 7;
@@ -41,7 +43,7 @@ public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessin
 
         Jws<Claims> claims =
                 Jwts.parserBuilder()
-                        .setSigningKey(SECRET_KEY.getBytes())
+                        .setSigningKey(secretKey)
                         .build()
                         .parseClaimsJws(parseBearerToken(jwtToken));
 

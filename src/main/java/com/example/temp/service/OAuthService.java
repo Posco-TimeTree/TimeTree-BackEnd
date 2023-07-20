@@ -1,10 +1,18 @@
 package com.example.temp.service;
 
+import com.example.temp.dto.NaverApiDto;
+import com.example.temp.entity.Member;
+import com.example.temp.entity.TokenBoard;
 import com.example.temp.repository.MemberRepository;
+import com.example.temp.repository.TokenBoardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,18 +20,49 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
-public class OAuthService {
+public class OAuthService extends DefaultOAuth2UserService {
 
     private final static Logger logger = LoggerFactory.getLogger(OAuth2MemberService.class);
     private final MemberRepository memberRepository;
+    private final TokenBoardRepository tokenBoardRepository;
+
 
     @Autowired
-    public OAuthService(MemberRepository memberRepository) {
+    public OAuthService(MemberRepository memberRepository, TokenBoardRepository tokenBoardRepository) {
         this.memberRepository = memberRepository;
+        this.tokenBoardRepository = tokenBoardRepository;
     }
 
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        OAuth2User oAuth2User = super.loadUser(userRequest);
+        logger.info(oAuth2User.toString());
+        return oAuth2User;
+    }
+
+    public Member createMemberFromNaver(NaverApiDto dto) {
+        Member member = Member.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .uuid(dto.getNaverId()).build();
+
+        memberRepository.save(member);
+        return member;
+    }
+
+    public TokenBoard createTokenBoard(Member member, String token) {
+        TokenBoard tokenBoard = TokenBoard.builder()
+                .memberId(member.getId())
+                .memberEmail(member.getEmail())
+                .token(token).build();
+        Optional<TokenBoard> tb = tokenBoardRepository.findByMemberEmailAndMemberId(member.getEmail(), member.getId());
+        if (tb.isEmpty())
+            tokenBoardRepository.save(tokenBoard);
+        return tokenBoard;
+    }
 
     public String getAccessToken(String code, String state) {
         String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
