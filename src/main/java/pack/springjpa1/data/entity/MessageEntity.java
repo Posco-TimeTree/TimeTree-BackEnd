@@ -2,70 +2,48 @@ package pack.springjpa1.data.entity;
 
 
 
-import pack.springjpa1.data.dto.MessageDTO;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Getter
+@Setter
 @Entity
-@Builder
 @Table(name = "message")
 public class MessageEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment 설정
     private Long messageId;
+
     private Long boxId;
+
     private String content;
+
     private Long userId;
 
     public MessageEntity() {}
 
-    public MessageEntity(Long messageId, Long boxId, String content, Long userId) {
-        this.messageId = messageId;
+    public MessageEntity(Long boxId, String content, Long userId) {
         this.boxId = boxId;
         this.content = content;
         this.userId = userId;
     }
 
-    public Long getMessageId() {
-        return messageId;
-    }
+    // Getters and setters
 
-    public void setMessageId(Long messageId) {
-        this.messageId = messageId;
-    }
-
-    public Long getBoxId() {
-        return boxId;
-    }
-
-    public void setBoxId(Long boxId) {
-        this.boxId = boxId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public MessageDTO toDto() {
-        return MessageDTO.builder()
-                .messageId(messageId)
-                .boxId(boxId)
-                .content(content)
-                .userId(userId)
-                .build();
+    @PrePersist
+    private void prePersist() {
+        if (boxId == null) {
+            // Auto-increment boxId based on userId
+            // Find the maximum boxId for the given userId and increment by 1
+            EntityManager entityManager = Persistence.createEntityManagerFactory("persistence-unit-name").createEntityManager();
+            Query query = entityManager.createQuery("SELECT MAX(m.boxId) FROM MessageEntity m WHERE m.userId = :userId");
+            query.setParameter("userId", userId);
+            Long maxBoxId = (Long) query.getSingleResult();
+            if (maxBoxId == null) {
+                maxBoxId = 0L;
+            }
+            boxId = maxBoxId + 1;
+        }
     }
 }
-

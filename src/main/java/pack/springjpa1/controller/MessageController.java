@@ -3,13 +3,11 @@ package pack.springjpa1.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pack.springjpa1.data.dto.MessageDTO;
 import pack.springjpa1.data.service.MessageService;
 
+@CrossOrigin(origins = "http://localhost:3000" ,allowCredentials = "true")
 @RestController
 public class MessageController {
     private final MessageService messageService;
@@ -20,9 +18,12 @@ public class MessageController {
     }
 
     @PostMapping("/messages")
-    public ResponseEntity<String> createMessage(@RequestBody MessageDTO messageDTO) {
-        messageService.createMessage(messageDTO);
-        return new ResponseEntity<>("Message created successfully", HttpStatus.CREATED);
+    public String showMessage(@RequestBody MessageDTO messageDTO) {
+        String content = messageDTO.getContent();
+        Long userId = messageDTO.getUserId();
+        System.out.println(userId);
+        System.out.println("Received message: " + content);
+        return "Message received successfully";
     }
 
     @GetMapping("/test")

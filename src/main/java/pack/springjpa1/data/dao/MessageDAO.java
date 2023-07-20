@@ -22,8 +22,6 @@ public class MessageDAO {
 
         messageEntity.setContent( dto.getContent());
         messageEntity.setUserId(dto.getUserId());
-        messageEntity.setMessageId( dto.getMessageId());
-        messageEntity.setBoxId(dto.getBoxId());
         this.messageRepository.save(messageEntity);
     }
 
