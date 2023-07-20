@@ -12,5 +12,6 @@ public class MemberDto {
     private String providerId; //공급 아이디
     private String country; //유저 사용 언어
     private String profileImage; //유저 프로필 사진
+
 }
 
