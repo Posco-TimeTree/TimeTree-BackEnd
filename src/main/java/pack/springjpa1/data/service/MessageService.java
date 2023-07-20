@@ -25,7 +25,7 @@ public class MessageService {
         return messageDAO.readAllMessages();
     }
 
-    public MessageEntity readMessagesByUserIdAndBoxId(Long userId, Long boxId) {
-        return messageDAO.readMessagesByUserIdAndBoxId(userId, boxId);
+    public MessageEntity readMessagesByUserId(Long userId) {
+        return messageDAO.readMessagesByUserId(userId);
     }
 }

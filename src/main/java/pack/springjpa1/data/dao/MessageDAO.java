@@ -28,8 +28,8 @@ public class MessageDAO {
     public List<MessageEntity> readAllMessages() {
         return this.messageRepository.findAll();
     }
-    public MessageEntity readMessagesByUserIdAndBoxId(Long userId, Long boxId) {
-        return  this.messageRepository.findByUserIdAndBoxId(userId, boxId);
+    public MessageEntity readMessagesByUserId(Long userId) {
+        return  this.messageRepository.findByUserId(userId);
     }
 }
 

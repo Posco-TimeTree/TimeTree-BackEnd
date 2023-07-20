@@ -23,7 +23,9 @@ public class MessageController {
         Long userId = messageDTO.getUserId();
         System.out.println(userId);
         System.out.println("Received message: " + content);
-        return "Message received successfully";
+
+        messageService.createMessage(messageDTO);
+       return "Message received successfully";
     }
 
     @GetMapping("/test")
