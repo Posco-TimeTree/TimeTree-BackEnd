@@ -25,7 +25,6 @@ public class MessageDAO {
         messageEntity.setMessageId( dto.getMessageId());
         Long userId = dto.getUserId();
         Long maxBoxId = messageRepository.findMaxBoxIdByUserId(userId);
-        System.out.println(maxBoxId+"maxId");
         Long boxId = (maxBoxId != null) ? maxBoxId + 1 : 1;
         System.out.println(boxId+" BoxId test");
         messageEntity.setBoxId(boxId);

@@ -31,19 +31,11 @@ public class MessageController {
     }
     @GetMapping("/messages/{userId}")
     public ResponseEntity<List<MessageEntity>> getMessagesByUserId(@PathVariable Long userId) {
-        System.out.println("User ID: " + userId); // Logging statement to check the received value
 
         List<MessageEntity> messages = messageService.getMessagesByUserId(userId);
 
-        // Logging the contents of the list
-        System.out.println("Messages: ");
-        for (MessageEntity message : messages) {
-            System.out.println("Message ID: " + message.getMessageId());
-            System.out.println("Box ID: " + message.getBoxId());
-            System.out.println("Content: " + message.getContent());
-            System.out.println("User ID: " + message.getUserId());
-            System.out.println("-----------------------------------");
-        }
+
+
 
         return ResponseEntity.ok(messages);
     }
