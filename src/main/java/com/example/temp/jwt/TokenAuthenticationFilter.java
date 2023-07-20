@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
-    private static final String SECRET_KEY="my_secret_key";
+    private static final String SECRET_KEY="sercretKey";
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final int SUBSTRING_BEARER_INDEX = 7;

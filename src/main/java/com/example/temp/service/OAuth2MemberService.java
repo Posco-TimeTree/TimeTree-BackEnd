@@ -31,51 +31,7 @@ public class OAuth2MemberService extends DefaultOAuth2UserService {
         this.memberRepository = memberRepository;
     }
 
-    public String getAccessToken(String code, String state) {
-        String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-        apiURL += "client_id=";
-        apiURL += "client_secret=";
-        apiURL += "&redirect_uri=http://localhost:8080/login/oauth2/code/naver";
-        apiURL += "&code=" + code;
-        apiURL += "&state=" + state;
 
-        String access_token = "";
-        try {
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
-            BufferedReader bufferedReader;
-            if (responseCode == 200) {
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {
-                throw new RuntimeException("API 요청 실패 : " + responseCode);
-            }
-            String inputLine;
-            StringBuffer stringBuffer = new StringBuffer();
-            while ((inputLine = bufferedReader.readLine()) != null) {
-                stringBuffer.append(inputLine);
-            }
-            bufferedReader.close();
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> map = mapper.readValue(stringBuffer.toString(), Map.class);
-            access_token = (String) map.get("access_token");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return access_token;
-    }
-
-    public int checkProvider(OAuth2UserRequest userRequest) {
-        String registerId = userRequest.getClientRegistration().getRegistrationId();
-        if (registerId.equals("google")) {
-            return 1;
-        } else if (registerId.equals("naver")) {
-            return 2;
-        } else {
-            return 0; // 이상함.
-        }
-    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
