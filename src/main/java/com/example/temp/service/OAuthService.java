@@ -25,7 +25,7 @@ import java.util.Optional;
 @Service
 public class OAuthService extends DefaultOAuth2UserService {
 
-    private final static Logger logger = LoggerFactory.getLogger(OAuth2MemberService.class);
+    private final static Logger logger = LoggerFactory.getLogger(OAuthService.class);
     private final MemberRepository memberRepository;
     private final TokenBoardRepository tokenBoardRepository;
 

@@ -5,11 +5,9 @@ import com.example.temp.dto.NaverApiDto;
 import com.example.temp.entity.Member;
 import com.example.temp.entity.TokenBoard;
 import com.example.temp.jwt.TokenGenerator;
-import com.example.temp.model.GoogleUser;
 import com.example.temp.repository.MemberRepository;
 import com.example.temp.repository.TokenBoardRepository;
 import com.example.temp.service.NaverAPI;
-import com.example.temp.service.OAuth2MemberService;
 import com.example.temp.service.OAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +36,6 @@ public class OAuthController {
         this.memberRepository = memberRepository;
         this.naverAPI = naverAPI;
         this.tokenBoardRepository = tokenBoardRepository;
-    }
-    @RequestMapping("google")
-    public GoogleUser googleCallBack(@RequestParam("code") String code) {
-        logger.info("code : " + code);
-        GoogleUser googleUser = new GoogleUser();
-        return googleUser;
     }
 
     @RequestMapping("naver/callback")
