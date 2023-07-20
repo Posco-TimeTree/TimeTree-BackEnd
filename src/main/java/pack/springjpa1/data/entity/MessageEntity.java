@@ -15,6 +15,7 @@ public class MessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment 설정
     private Long messageId;
 
+    private Long boxId;
 
     private String content;
 
@@ -22,12 +23,14 @@ public class MessageEntity {
 
     public MessageEntity() {}
 
-    public MessageEntity( String content, Long userId) {
+    public MessageEntity(Long boxId, String content, Long userId) {
+        this.boxId = boxId;
         this.content = content;
         this.userId = userId;
     }
 
     // Getters and setters
+
 
 
     /*

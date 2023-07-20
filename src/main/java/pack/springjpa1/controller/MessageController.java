@@ -21,17 +21,11 @@ public class MessageController {
     public String showMessage(@RequestBody MessageDTO messageDTO) {
         String content = messageDTO.getContent();
         Long userId = messageDTO.getUserId();
-        System.out.println(userId);
-        System.out.println("Received message: " + content);
+
 
         messageService.createMessage(messageDTO);
-       return "Message received successfully";
+        return "Message received successfully";
     }
 
-    @GetMapping("/test")
-    public String savetest() {
-        String test =  "213";
 
-        return test;
-    }
 }

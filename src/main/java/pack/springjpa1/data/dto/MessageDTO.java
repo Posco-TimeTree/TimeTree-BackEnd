@@ -13,6 +13,7 @@ import pack.springjpa1.data.entity.MessageEntity;
 @Setter
 public class MessageDTO {
     private Long messageId;
+    private Long boxId;
     private String content;
     private Long userId;
     public void getUserId(Long id) {
