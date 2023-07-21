@@ -19,11 +19,15 @@ public class MessageDAO {
 
     public void createMessage(MessageDTO dto) {
         MessageEntity messageEntity = new MessageEntity();
-
+        System.out.println("createMessage123");
         messageEntity.setContent( dto.getContent());
         messageEntity.setUserId(dto.getUserId());
         messageEntity.setMessageId( dto.getMessageId());
-        messageEntity.setBoxId(dto.getBoxId());
+        Long userId = dto.getUserId();
+        Long maxBoxId = messageRepository.findMaxBoxIdByUserId(userId);
+        Long boxId = (maxBoxId != null) ? maxBoxId + 1 : 1;
+        System.out.println(boxId+" BoxId test");
+        messageEntity.setBoxId(boxId);
         this.messageRepository.save(messageEntity);
     }
 
@@ -32,6 +36,10 @@ public class MessageDAO {
     }
     public MessageEntity readMessagesByUserIdAndBoxId(Long userId, Long boxId) {
         return  this.messageRepository.findByUserIdAndBoxId(userId, boxId);
+    }
+    public List<MessageEntity> getMessagesByUserId(Long userId) {
+        System.out.println(userId+"getMessagesByUserId");
+        return messageRepository.findByUserId(userId);
     }
 }
 
