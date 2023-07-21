@@ -2,6 +2,7 @@ package pack.springjpa1.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pack.springjpa1.data.dto.CodeDto;
 import pack.springjpa1.data.dto.MemberDto;
 import pack.springjpa1.data.dto.NaverApiDto;
 import pack.springjpa1.data.entity.Member;
@@ -39,9 +40,10 @@ public class OAuthController {
     }
 
     @PostMapping("naver/callback")
-    public MemberDto callback(@RequestBody String code, @RequestBody String state, RedirectAttributes rttr) throws IOException {
-        logger.info("code : " + code);
-        logger.info("state : " + state);
+    public MemberDto callback(@RequestBody CodeDto codeDto, RedirectAttributes rttr) throws IOException {
+        logger.info("codedto : " + codeDto);
+        String code = codeDto.getCode();
+        String state = codeDto.getState();
         String redirectUrl = "http://localhost:3000/";
         String accees_token = oauthService.getAccessToken(code, state);
         String token = "";
