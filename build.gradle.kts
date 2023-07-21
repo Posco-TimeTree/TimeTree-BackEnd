@@ -21,7 +21,7 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.projectlombok:lombok")
-    implementation ("org.springframework.boot:spring-boot-starter-data-redis:2.7.5")
+//    implementation ("org.springframework.boot:spring-boot-starter-data-redis:2.7.5")
     implementation ("io.jsonwebtoken:jjwt-api:0.11.5")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

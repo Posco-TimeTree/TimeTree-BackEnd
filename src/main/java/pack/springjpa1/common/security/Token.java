@@ -2,14 +2,14 @@ package pack.springjpa1.common.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.TimeToLive;
+//import org.springframework.data.redis.core.RedisHash;
+//import org.springframework.data.redis.core.TimeToLive;
 
 import javax.persistence.Id;
 import java.util.concurrent.TimeUnit;
 
 @Getter
-@RedisHash("refreshToken")
+//@RedisHash("refreshToken")
 @Builder @AllArgsConstructor @NoArgsConstructor
 public class Token {
 
@@ -19,7 +19,7 @@ public class Token {
 
     private String refresh_token;
 
-    @TimeToLive(unit = TimeUnit.SECONDS)
+//    @TimeToLive(unit = TimeUnit.SECONDS)
     private Integer expiration;
 
     public void setExpiration(Integer expiration) {
