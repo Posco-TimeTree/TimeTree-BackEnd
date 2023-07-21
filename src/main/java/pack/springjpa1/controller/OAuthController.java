@@ -1,5 +1,6 @@
 package pack.springjpa1.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import pack.springjpa1.data.dto.MemberDto;
 import pack.springjpa1.data.dto.NaverApiDto;
 import pack.springjpa1.data.entity.Member;
@@ -38,7 +39,7 @@ public class OAuthController {
         this.tokenBoardRepository = tokenBoardRepository;
     }
 
-    @RequestMapping("naver/callback")
+    @GetMapping("naver/callback")
     public MemberDto callback(@RequestParam("code") String code, @RequestParam("state") String state) throws IOException {
         logger.info("code : " + code);
         logger.info("state : " + state);

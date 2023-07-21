@@ -5,27 +5,17 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
+public class TokenAuthenticationFilter {
     private final byte[] secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded();
 
     private static final String BEARER_PREFIX = "Bearer ";
     private static final int SUBSTRING_BEARER_INDEX = 7;
     private static final String AUTHORIZATION_HEADER = "authorization";
 
-    @Override
-    protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-        return resolveToken(request);
-    }
-
-    @Override
-    protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-        return resolveToken(request);
-    }
 
     public String resolveToken(HttpServletRequest request) {
         String jwtToken = request.getHeader(AUTHORIZATION_HEADER);

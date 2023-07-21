@@ -9,10 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -23,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class OAuthService extends DefaultOAuth2UserService {
+public class OAuthService  {
 
     private final static Logger logger = LoggerFactory.getLogger(OAuthService.class);
     private final MemberRepository memberRepository;
@@ -36,12 +32,6 @@ public class OAuthService extends DefaultOAuth2UserService {
         this.tokenBoardRepository = tokenBoardRepository;
     }
 
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(userRequest);
-        logger.info(oAuth2User.toString());
-        return oAuth2User;
-    }
 
     public Member createMemberFromNaver(NaverApiDto dto) {
         Member member = Member.builder()

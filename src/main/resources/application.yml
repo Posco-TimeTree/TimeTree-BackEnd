@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-Class-Name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/pos_tree
@@ -22,7 +25,7 @@ spring:
             redirect-uri: "http://localhost:8080"
           naver:
             client-id: "kEz83Zwu754Dn_PQ0ZK2"
-            client-secret:
+            client-secret: "mkmZetwPuq"
             scope: "name, email"
             client-name: "Naver"
             authorization-grant-type: "authorization_code"
@@ -33,3 +36,8 @@ spring:
             token-uri: "https://nid.naver.com/oauth2.0/token"
             user-info-uri: "https://openai.naver.com/v1/nid/me"
             user-name-attribute: "response"
+
+#  naver-client-id="kEz83Zwu754Dn_PQ0ZK2"
+#  naver-client-secret="mkmZetwPuq"
+#  google-client-id="397003871219-iu2vl90k0vogk4qb0li6kdohmuetc105.apps.googleusercontent.com"
+#  google-client-secret="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"
