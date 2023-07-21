@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000" ,allowCredentials = "true")
 @RestController
 @RequestMapping("oauth")
 public class OAuthController {
