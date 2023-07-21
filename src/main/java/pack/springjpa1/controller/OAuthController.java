@@ -39,7 +39,7 @@ public class OAuthController {
     }
 
     @PostMapping("naver/callback")
-    public MemberDto callback(String code, String state, RedirectAttributes rttr) throws IOException {
+    public MemberDto callback(@RequestBody String code, @RequestBody String state, RedirectAttributes rttr) throws IOException {
         logger.info("code : " + code);
         logger.info("state : " + state);
         String redirectUrl = "http://localhost:3000/";
