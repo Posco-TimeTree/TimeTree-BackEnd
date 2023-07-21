@@ -1,6 +1,7 @@
 package pack.springjpa1.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pack.springjpa1.data.dto.MemberDto;
 import pack.springjpa1.data.dto.NaverApiDto;
 import pack.springjpa1.data.entity.Member;
@@ -13,9 +14,6 @@ import pack.springjpa1.data.service.OAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -39,13 +37,13 @@ public class OAuthController {
         this.tokenBoardRepository = tokenBoardRepository;
     }
 
-    @GetMapping("naver/callback")
-    public MemberDto callback(@RequestParam("code") String code, @RequestParam("state") String state) throws IOException {
+    @PostMapping("naver/callback")
+    public MemberDto callback(String code, String state, RedirectAttributes rttr) throws IOException {
         logger.info("code : " + code);
         logger.info("state : " + state);
         String redirectUrl = "http://localhost:3000/";
-        String accees_token = oauthService.getAccessToken(code,state);
-        String token="";
+        String accees_token = oauthService.getAccessToken(code, state);
+        String token = "";
         MemberDto memberDto = new MemberDto();
 
         logger.info("access_token1 :  " + accees_token);
@@ -60,7 +58,7 @@ public class OAuthController {
             }
             Optional<Member> member = memberRepository.findByNameAndEmail(naverApiDto.getName(), naverApiDto.getEmail());
             if (member.isEmpty()) {
-               logger.info("fail 3 : not exist member");
+                logger.info("fail 3 : not exist member");
                 Member newMember = oauthService.createMemberFromNaver(naverApiDto);
                 token = tokenGenerator.getToken(newMember);
                 TokenBoard tokenBoard = oauthService.createTokenBoard(newMember, token);
@@ -69,11 +67,11 @@ public class OAuthController {
                 memberDto.setEmail(newMember.getEmail());
                 memberDto.setName(newMember.getName());
                 memberDto.setToken(token);
-            }else {
+            } else {
                 token = tokenGenerator.getToken(member.get());
                 TokenBoard tokenBoard = oauthService.createTokenBoard(member.get(), token);
                 logger.info("token board : " + tokenBoard);
-                logger.info("token: " +token);
+                logger.info("token: " + token);
                 memberDto.setMemberId(member.get().getId());
                 memberDto.setEmail(member.get().getEmail());
                 memberDto.setName(member.get().getName());
@@ -84,6 +82,7 @@ public class OAuthController {
         }
         logger.info("token : " + token);
         logger.info("memberdto : " + memberDto);
+        rttr.addFlashAttribute("user", memberDto);
         return memberDto;
     }
 }
