@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("oauth")
 public class OAuthController {
