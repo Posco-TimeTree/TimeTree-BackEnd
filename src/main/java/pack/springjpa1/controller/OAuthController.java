@@ -19,7 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://175.45.202.192:3000" ,allowCredentials = "true")
+//@CrossOrigin(origins = "http://175.45.202.192:3000" ,allowCredentials = "true")
+@CrossOrigin(origins = {"http://175.45.202.192:3000", "http://localhost:3000"} ,allowCredentials = "true")
 @RestController
 @RequestMapping("oauth")
 public class OAuthController {
@@ -44,7 +45,7 @@ public class OAuthController {
         logger.info("codedto : " + codeDto);
         String code = codeDto.getCode();
         String state = codeDto.getState();
-        String redirectUrl = "http://175.45.202.192:3000/";
+//        String redirectUrl = "http://localhost:3000/";
         String accees_token = oauthService.getAccessToken(code, state);
         String token = "";
         MemberDto memberDto = new MemberDto();

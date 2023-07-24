@@ -10,7 +10,13 @@ import pack.springjpa1.data.service.MessageService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://175.45.202.192:3000" ,allowCredentials = "true")
+//@CrossOrigin(origins = "http://175.45.202.192:3000" ,allowCredentials = "true")
+//@CrossOrigin(origins = "*", allowCredentials = "true")
+//@CrossOrigin(origins = {"http://175.45.202.192:3000"},
+//        allowedOriginPatterns = "*",
+//        allowCredentials = true)
+@CrossOrigin(origins = {"http://175.45.202.192:3000", "http://localhost:3000"} ,allowCredentials = "true")
+
 @RestController
 public class MessageController {
     private final MessageService messageService;
