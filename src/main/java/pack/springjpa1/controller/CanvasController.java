@@ -7,8 +7,7 @@ import pack.springjpa1.data.dto.TreeDTO;
 import pack.springjpa1.data.service.TreeService;
 import java.util.Base64;
 
-@CrossOrigin(origins = {"http://175.45.202.192:3000", "http://localhost:3000"} ,allowCredentials = "true")
-//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://https://verdant-creponne-dc7564.netlify.app/", "http://localhost:3000"} ,allowCredentials = "true")
 @RestController
 public class CanvasController {
     private final TreeService treeService;

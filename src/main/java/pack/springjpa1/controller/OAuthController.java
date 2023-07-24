@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 //@CrossOrigin(origins = "http://175.45.202.192:3000" ,allowCredentials = "true")
-@CrossOrigin(origins = {"http://175.45.202.192:3000", "http://localhost:3000"} ,allowCredentials = "true")
+@CrossOrigin(origins = {"https://verdant-creponne-dc7564.netlify.app/", "http://localhost:3000"} ,allowCredentials = "true")
 @RestController
 @RequestMapping("oauth")
 public class OAuthController {
